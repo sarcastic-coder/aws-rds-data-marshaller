@@ -30,7 +30,7 @@ export namespace Parameter {
   type ArrayItemsDefinition = {
     valuesKey: ArrayTypes.ValuesKey;
     items?: ArrayItemsDefinition;
-  }
+  };
 
   export type ArrayFieldDefinition = (
     & FieldDefinition
@@ -143,7 +143,7 @@ export const marshallArrayValue: ArrayValueMarshaller = (definition, values) => 
   return {
     [definition.valuesKey]: definition.valuesKey === Parameter.ArrayTypes.ValuesKey.Array
       ? values.map((value) => marshallArrayValue(definition.items as Parameter.ArrayTypes.FieldDefinition, value as unknown[]))
-      : values
+      : values,
   };
 };
 
@@ -196,5 +196,5 @@ type SetMarshaller = (definition: Record<string, Parameter.FieldDefinition>, par
 export const marshallParameterSet: SetMarshaller = (definition, parameterSets) => {
   return parameterSets.map((parameters) => {
     return marshallParameters(definition, parameters);
-  })
+  });
 };

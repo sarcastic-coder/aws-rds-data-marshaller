@@ -15,7 +15,7 @@ describe('unmarshallField()', () => {
     expect(
       unmarshallField(columnMetadata, field),
     )
-    .toStrictEqual('my database value');
+      .toStrictEqual('my database value');
   });
 
   it('unmarshalls a null field', () => {
@@ -31,7 +31,7 @@ describe('unmarshallField()', () => {
     expect(
       unmarshallField(columnMetadata, field),
     )
-    .toStrictEqual(null);
+      .toStrictEqual(null);
   });
 
   it('unmarshalls a JSON field', () => {
@@ -42,13 +42,13 @@ describe('unmarshallField()', () => {
     };
 
     const field: Field = {
-      stringValue: JSON.stringify({ my_field_json: 'foo '})
+      stringValue: JSON.stringify({ my_field_json: 'foo ' }),
     };
 
     expect(
       unmarshallField(columnMetadata, field),
     )
-    .toStrictEqual({ my_field_json: 'foo '});
+      .toStrictEqual({ my_field_json: 'foo ' });
   });
 
   it('unmarshalls an array field', () => {
@@ -60,14 +60,14 @@ describe('unmarshallField()', () => {
 
     const field: Field = {
       arrayValue: {
-        stringValues: ['foo', 'bar', 'baz']
+        stringValues: ['foo', 'bar', 'baz'],
       },
     };
 
     expect(
       unmarshallField(columnMetadata, field),
     )
-    .toStrictEqual(['foo', 'bar', 'baz']);
+      .toStrictEqual(['foo', 'bar', 'baz']);
   });
 
   it('unmarshalls a JSON array field', () => {
@@ -82,17 +82,17 @@ describe('unmarshallField()', () => {
         stringValues: [
           JSON.stringify({ a: 1 }),
           JSON.stringify({ b: 2 }),
-        ]
+        ],
       },
     };
 
     expect(
       unmarshallField(columnMetadata, field),
     )
-    .toStrictEqual([
-      { a: 1 },
-      { b: 2 },
-    ]);
+      .toStrictEqual([
+        { a: 1 },
+        { b: 2 },
+      ]);
   });
 
   it('unmarshalls a nested array field', () => {
@@ -106,10 +106,10 @@ describe('unmarshallField()', () => {
       arrayValue: {
         arrayValues: [
           {
-            stringValues: ['foo', 'bar', 'baz']
+            stringValues: ['foo', 'bar', 'baz'],
           },
           {
-            stringValues: ['spam', 'eggs']
+            stringValues: ['spam', 'eggs'],
           },
         ],
       },
@@ -118,10 +118,10 @@ describe('unmarshallField()', () => {
     expect(
       unmarshallField(columnMetadata, field),
     )
-    .toStrictEqual([
-      ['foo', 'bar', 'baz'],
-      ['spam', 'eggs'],
-    ]);
+      .toStrictEqual([
+        ['foo', 'bar', 'baz'],
+        ['spam', 'eggs'],
+      ]);
   });
 });
 
@@ -137,7 +137,7 @@ describe('unmarshallRecord()', () => {
     const record: FieldList = [
       {
         stringValue: '817f30dc-cfd1-4970-84a5-076622bc2cae',
-      }
+      },
     ];
 
     const expected = {
@@ -145,7 +145,7 @@ describe('unmarshallRecord()', () => {
     };
 
     expect(unmarshallRecord(metadata, record))
-      .toStrictEqual(expected)
+      .toStrictEqual(expected);
   });
 
   it('unmarshalls a record with multiple field', () => {
@@ -175,7 +175,7 @@ describe('unmarshallRecord()', () => {
     };
 
     expect(unmarshallRecord(metadata, record))
-      .toStrictEqual(expected)
+      .toStrictEqual(expected);
   });
 });
 
@@ -218,7 +218,7 @@ describe('unmarshallResponse()', () => {
       },
     ];
 
-    expect(unmarshallResponse({columnMetadata, records}))
-      .toStrictEqual(expected)
+    expect(unmarshallResponse({ columnMetadata, records }))
+      .toStrictEqual(expected);
   });
 });

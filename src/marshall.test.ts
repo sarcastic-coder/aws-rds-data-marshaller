@@ -24,7 +24,7 @@ describe('marshall()', () => {
           {
             myParameterKey: 'some string value',
           },
-        )
+        ),
       ).toStrictEqual(expected);
     });
 
@@ -50,7 +50,7 @@ describe('marshall()', () => {
           {
             myUuidParameter: 'some string value',
           },
-        )
+        ),
       ).toStrictEqual(expected);
     });
 
@@ -76,7 +76,7 @@ describe('marshall()', () => {
           {
             myJsonParameter: '{"someObjectKey": "some object value"}',
           },
-        )
+        ),
       ).toStrictEqual(expected);
     });
 
@@ -102,7 +102,7 @@ describe('marshall()', () => {
           {
             myTimestampParameter: '1970-01-01T00:00:00Z',
           },
-        )
+        ),
       ).toStrictEqual(expected);
     });
   });
@@ -121,8 +121,8 @@ describe('marshall()', () => {
               stringValues: ['a', 'b', 'c'],
             },
             isNull: false,
-          }
-        }
+          },
+        },
       ];
 
       expect(
@@ -131,17 +131,17 @@ describe('marshall()', () => {
           {
             myArrayField: ['a', 'b', 'c'],
           },
-        )
+        ),
       )
-      .toStrictEqual(expected)
+        .toStrictEqual(expected);
     });
 
     it('marshalls an array of arrays', () => {
       const definition: Parameter.Definition = {
         myNestedArrayField: Parameter.Array(
           Parameter.ArrayTypes.Array(
-            Parameter.ArrayTypes.String()
-          )
+            Parameter.ArrayTypes.String(),
+          ),
         ),
       };
 
@@ -171,9 +171,9 @@ describe('marshall()', () => {
               ['c'],
             ],
           },
-        )
+        ),
       )
-      .toStrictEqual(expected)
+        .toStrictEqual(expected);
     });
   });
 });
@@ -228,8 +228,8 @@ describe('marshallSet()', () => {
             myParameterKey: 'baz',
           },
         ],
-      )
+      ),
     )
-    .toStrictEqual(expected)
+      .toStrictEqual(expected);
   });
 });

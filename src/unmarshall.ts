@@ -31,7 +31,7 @@ const arrayUnmarshaller = (columnMetadata: ColumnMetadata, field: ArrayField) =>
           }
 
           if (value.stringValues === undefined) {
-            throw new Error(`Unable to unmarshall JSON array field, items are missing.`);
+            throw new Error('Unable to unmarshall JSON array field, items are missing.');
           }
 
           return value.stringValues.map((item: string) => JSON.parse(item as string));

@@ -1,7 +1,38 @@
+# ---
+# --- Code
+# ---
+
+.PHONY: \
+	code \
+	code.fix
+
+code:
+	npx eslint \
+		--cache \
+		--cache-location .eslintcache \
+		--format codeframe \
+			.
+
+code.fix:
+	npx eslint \
+		--cache \
+		--cache-location .eslintcache \
+		--fix \
+		--format codeframe \
+			.
+
+# ---
+# --- Testing
+# ---
+
 .PHONY: test
 
 test:
 	npx jest --verbose
+
+# ---
+# --- Build
+# ---
 
 .PHONY: \
 	build \
