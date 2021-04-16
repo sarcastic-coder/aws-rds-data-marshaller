@@ -1,4 +1,13 @@
 # ---
+# --- Install
+# ---
+
+.PHONY: install
+
+install:
+	npm ci --no-scripts
+
+# ---
 # --- Code
 # ---
 
