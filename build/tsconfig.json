@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.json",
+
+  "compilerOptions": {
+    "outDir": "workspace",
+
+    "noEmit": false,
+  },
+
+  "exclude": [
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "node_modules",
+  ],
+}
