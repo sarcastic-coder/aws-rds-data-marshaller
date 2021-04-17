@@ -15,6 +15,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '15'
+          registry-url: https://registry.npmjs.org
 
       - run: node -v
       - run: npm -v
@@ -34,7 +35,6 @@ jobs:
         with:
           version: ${{ github.ref }}
           directory: build/workspace
-          access: restricted
           execute: true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
