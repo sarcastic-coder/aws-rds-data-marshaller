@@ -75,6 +75,9 @@ build.setup.validate:
 build.compile:
 	npx tsc --version
 	npx tsc -p build/tsconfig.json
+	find build/workspace/ -type f -name *.test.js -delete
+	find build/workspace/ -type f -name *.test.js.map -delete
+	find build/workspace/ -type f -name *.test.d.ts -delete
 
 build.compile.validate:
 	test -f build/workspace/marshall.js
