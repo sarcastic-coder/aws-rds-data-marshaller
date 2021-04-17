@@ -1,5 +1,5 @@
 import { ColumnMetadata, Field, FieldList, Metadata, SqlRecords } from 'aws-sdk/clients/rdsdataservice';
-import { ColumnType, ColumnTypeName, unmarshallField, unmarshallRecord, unmarshallResponse } from './unmarshall';
+import { ColumnType, ColumnTypeName, unmarshallField, unmarshallRecord, unmarshallResponse } from '.';
 
 describe('unmarshallField()', () => {
   it('unmarshalls a string field', () => {
