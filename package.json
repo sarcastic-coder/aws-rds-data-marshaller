@@ -3,6 +3,9 @@
   "version": "0.1.1",
   "description": "A marshaller/unmarshaller for AWS RDS data-api",
   "main": "index.js",
+  "engines": {
+    "node": ">=15"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/sarcastic-coder/aws-rds-data-marshaller.git"
