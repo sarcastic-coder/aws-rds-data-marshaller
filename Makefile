@@ -49,12 +49,14 @@ test:
 	build.setup \
 	build.setup.validate \
 	build.compile \
+	build.compile.validate
 
 build: \
 	build.install \
 	build.setup \
 	build.setup.validate \
 	build.compile \
+	build.compile.validate
 
 build.install:
 	npm ci --ignore-scripts
@@ -83,7 +85,7 @@ build.compile:
 	find build/workspace/ -type f -name *.test.d.ts -delete
 
 build.compile.validate:
-	test -f build/workspace/marshall.js
+	test -f build/workspace/marshall/index.js
 	test -f build/workspace/marshall.d.js
 
 # ---

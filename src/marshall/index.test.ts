@@ -1,11 +1,12 @@
 import type { SqlParameterSets, SqlParametersList } from 'aws-sdk/clients/rdsdataservice';
-import { marshallParameters, marshallParameterSet, Parameter } from './marshall';
+import { marshallParameters, marshallParameterSet } from '.';
+import { Array as ArrayParameter, ArrayTypes, Definition, JSON as JSONParameter, String, Timestamp, UUID } from './parameter';
 
 describe('marshall()', () => {
   describe('simple types', () => {
     it('marshalls a string value', () => {
-      const definition: Parameter.Definition = {
-        myParameterKey: Parameter.String(),
+      const definition: Definition = {
+        myParameterKey: String(),
       };
 
       const expected: SqlParametersList = [
@@ -29,8 +30,8 @@ describe('marshall()', () => {
     });
 
     it('marshalls a string value with a UUID type hint', () => {
-      const definition: Parameter.Definition = {
-        myUuidParameter: Parameter.UUID(),
+      const definition: Definition = {
+        myUuidParameter: UUID(),
       };
 
       const expected: SqlParametersList = [
@@ -55,8 +56,8 @@ describe('marshall()', () => {
     });
 
     it('marshalls a string value with a JSON type hint', () => {
-      const definition: Parameter.Definition = {
-        myJsonParameter: Parameter.JSON(),
+      const definition: Definition = {
+        myJsonParameter: JSONParameter(),
       };
 
       const expected: SqlParametersList = [
@@ -81,8 +82,8 @@ describe('marshall()', () => {
     });
 
     it('marshalls a string value with a TIMESTAMP type hint', () => {
-      const definition: Parameter.Definition = {
-        myTimestampParameter: Parameter.Timestamp(),
+      const definition: Definition = {
+        myTimestampParameter: Timestamp(),
       };
 
       const expected: SqlParametersList = [
@@ -109,8 +110,8 @@ describe('marshall()', () => {
 
   describe('array types', () => {
     it('marshalls an array of strings', () => {
-      const definition: Parameter.Definition = {
-        myArrayField: Parameter.Array(Parameter.ArrayTypes.String()),
+      const definition: Definition = {
+        myArrayField: ArrayParameter(ArrayTypes.String()),
       };
 
       const expected: SqlParametersList = [
@@ -137,10 +138,10 @@ describe('marshall()', () => {
     });
 
     it('marshalls an array of arrays', () => {
-      const definition: Parameter.Definition = {
-        myNestedArrayField: Parameter.Array(
-          Parameter.ArrayTypes.Array(
-            Parameter.ArrayTypes.String(),
+      const definition: Definition = {
+        myNestedArrayField: ArrayParameter(
+          ArrayTypes.Array(
+            ArrayTypes.String(),
           ),
         ),
       };
@@ -180,8 +181,8 @@ describe('marshall()', () => {
 
 describe('marshallSet()', () => {
   describe('mashalls a set of parameters', () => {
-    const definition: Parameter.Definition = {
-      myParameterKey: Parameter.String(),
+    const definition: Definition = {
+      myParameterKey: String(),
     };
 
     const expected: SqlParameterSets = [
