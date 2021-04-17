@@ -65,6 +65,7 @@ build.clean:
 build.setup:
 	mkdir -p build/workspace
 
+	cp README.md build/workspace/README.md
 	cp package.json build/workspace/package.json
 	cp package-lock.json build/workspace/package-lock.json
 
