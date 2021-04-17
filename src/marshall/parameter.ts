@@ -1,4 +1,3 @@
-
 export const enum ValueKey {
   Array = 'arrayValue',
   Blob = 'blobValue',
