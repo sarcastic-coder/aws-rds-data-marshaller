@@ -180,7 +180,7 @@ describe('marshall()', () => {
 });
 
 describe('marshallSet()', () => {
-  describe('mashalls a set of parameters', () => {
+  it('mashalls a set of parameters', () => {
     const definition: Definition = {
       myParameterKey: String(),
     };
