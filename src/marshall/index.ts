@@ -1,5 +1,5 @@
 import type { ArrayValue, SqlParameter, SqlParameterSets, SqlParametersList } from 'aws-sdk/clients/rdsdataservice';
-import { ArrayFieldDefinition, ArrayTypes, FieldDefinition, ValueKey } from './parameter';
+import { ArrayTypes, FieldDefinition, ValueKey } from './parameter';
 
 type ArrayValueMarshaller = (definition: ArrayTypes.FieldDefinition, values: unknown[]) => ArrayValue;
 
@@ -11,11 +11,14 @@ export const marshallArrayValue: ArrayValueMarshaller = (definition, values) => 
   };
 };
 
-type Marshaller = (definition: Record<string, FieldDefinition>, parameters: Record<string, unknown>) => SqlParametersList;
+export type ParameterDefinitions = Record<string, FieldDefinition>;
+export type ParameterList<D extends ParameterDefinitions> = Record<D[keyof D]['value']['alias'] extends string ? D[keyof D]['value']['alias'] : keyof D, unknown>;
 
-export const marshallParameters: Marshaller = (definition, parameters) => {
-  const parameterKeys = Object.keys(parameters);
-  const definitionKeys = Object.keys(definition);
+// type Marshaller = <D extends ParameterDefinitions>(definition: D, parameters: ParameterList<D>) => SqlParametersList;
+
+export const marshallParameters = <D extends ParameterDefinitions>(definition: D, parameters: ParameterList<D>): SqlParametersList => {
+  const parameterKeys: Array<keyof ParameterList<D>> = Object.keys(parameters);
+  const definitionKeys: Array<keyof D> = Object.keys(definition);
 
   const missingDefinitions = parameterKeys.filter((key) => {
     return definitionKeys.includes(key) === false;
@@ -30,7 +33,7 @@ export const marshallParameters: Marshaller = (definition, parameters) => {
   for (const fieldName of parameterKeys) {
     const fieldDefinition = definition[fieldName];
 
-    if (definition[fieldName].nullable === false && parameters[fieldName] === null) {
+    if (definition[fieldName].value.nullable === false && parameters[fieldName] === null) {
       throw new Error(`NULL value given for non-nullable parameter ${fieldName}`);
     }
 
@@ -38,15 +41,15 @@ export const marshallParameters: Marshaller = (definition, parameters) => {
       name: fieldName,
 
       value: {
-        [fieldDefinition.valueKey]: fieldDefinition.valueKey === ValueKey.Array
-          ? marshallArrayValue((fieldDefinition as ArrayFieldDefinition).items, parameters[fieldName] as unknown[])
+        [fieldDefinition.value.valueKey]: fieldDefinition.value.valueKey === ValueKey.Array
+          ? marshallArrayValue((fieldDefinition).value.items, parameters[fieldName] as unknown[])
           : parameters[fieldName],
         isNull: parameters[fieldName] === null,
       },
     };
 
-    if (fieldDefinition.typeHint !== undefined) {
-      marshalledParameter.typeHint = fieldDefinition.typeHint;
+    if (fieldDefinition.value.typeHint !== undefined) {
+      marshalledParameter.typeHint = fieldDefinition.value.typeHint;
     }
 
     marshalledParameters.push(marshalledParameter);

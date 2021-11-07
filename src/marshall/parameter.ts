@@ -1,3 +1,5 @@
+import { Discriminator, make } from '@matt-usurp/tagged-types';
+
 export const enum ValueKey {
   Array = 'arrayValue',
   Blob = 'blobValue',
@@ -5,6 +7,21 @@ export const enum ValueKey {
   Double = 'doubleValue',
   Long = 'longValue',
   String = 'stringValue',
+}
+
+const enum FieldType {
+  String = 'string',
+  UUID = 'uuid',
+  JSON = 'json',
+  Timestamp = 'timestamp',
+  Date = 'date',
+  Time = 'time',
+  Blob = 'blob',
+  Boolean = 'boolean',
+  Double = 'double',
+  Decimal = 'decimal',
+  Long = 'long',
+  Array = 'array',
 }
 
 const enum TypeHint {
@@ -18,81 +35,94 @@ const enum TypeHint {
 
 export type Definition = Record<string, FieldDefinition>;
 
-export type FieldDefinition = {
+export type FieldDefinition = Discriminator<FieldType, {
   valueKey: ValueKey;
   typeHint?: TypeHint;
   nullable?: boolean;
-};
+  alias?: string;
+}>;
 
 type ArrayItemsDefinition = {
   valuesKey: ArrayTypes.ValuesKey;
   items?: ArrayItemsDefinition;
 };
 
-export type ArrayFieldDefinition = (
-  & FieldDefinition
+export type ArrayFieldDefinition = Discriminator<FieldType.Array, (
+  & FieldDefinition['value']
   & {
     items: ArrayItemsDefinition;
   }
-);
+)>;
 
-export const String = (): FieldDefinition => ({
+export const String = (alias?: string): FieldDefinition => make(FieldType.String, {
+  alias,
   valueKey: ValueKey.String,
 });
 
-export const UUID = (): FieldDefinition => ({
-  ...String(),
+export const UUID = (alias?: string): FieldDefinition => make(FieldType.UUID, {
+  ...String().value,
 
+  alias,
   typeHint: TypeHint.UUID,
 });
 
-export const JSON = (): FieldDefinition => ({
-  ...String(),
+export const JSON = (alias?: string): FieldDefinition => make(FieldType.JSON, {
+  ...String().value,
 
+  alias,
   typeHint: TypeHint.JSON,
 });
 
-export const Timestamp = (): FieldDefinition => ({
-  ...String(),
+export const Timestamp = (alias?: string): FieldDefinition => make(FieldType.Timestamp, {
+  ...String().value,
 
+  alias,
   typeHint: TypeHint.Timestamp,
 });
 
-export const Date = (): FieldDefinition => ({
-  ...String(),
+export const Date = (alias?: string): FieldDefinition => make(FieldType.Date, {
+  ...String().value,
 
+  alias,
   typeHint: TypeHint.Date,
 });
 
-export const Time = (): FieldDefinition => ({
-  ...String(),
+export const Time = (alias?: string): FieldDefinition => make(FieldType.Time, {
+  ...String().value,
 
+  alias,
   typeHint: TypeHint.Time,
 });
 
-export const Blob = (): FieldDefinition => ({
+export const Blob = (alias?: string): FieldDefinition => make(FieldType.Blob, {
+  alias,
   valueKey: ValueKey.Blob,
 });
 
-export const Boolean = (): FieldDefinition => ({
+export const Boolean = (alias?: string): FieldDefinition => make(FieldType.Boolean, {
+  alias,
   valueKey: ValueKey.Boolean,
 });
 
-export const Double = (): FieldDefinition => ({
+export const Double = (alias?: string): FieldDefinition => make(FieldType.Double, {
+  alias,
   valueKey: ValueKey.Double,
 });
 
-export const Decimal = (): FieldDefinition => ({
-  ...Double(),
+export const Decimal = (alias?: string): FieldDefinition => make(FieldType.Double, {
+  ...Double().value,
 
+  alias,
   typeHint: TypeHint.Decimal,
 });
 
-export const Long = (): FieldDefinition => ({
+export const Long = (alias?: string): FieldDefinition => make(FieldType.Long, {
+  alias,
   valueKey: ValueKey.Long,
 });
 
-export const Array = (items: ArrayTypes.FieldDefinition): ArrayFieldDefinition => ({
+export const Array = (items: ArrayTypes.FieldDefinition, alias?: string): ArrayFieldDefinition => make(FieldType.Array, {
+  alias,
   valueKey: ValueKey.Array,
   items,
 });
