@@ -66,7 +66,7 @@ build.setup:
 	mkdir -p build/workspace
 
 	cp LICENSE build/workspace/LICENSE
-	cp CHANGELOG build/workspace/CHANGELOG.md
+	cp CHANGELOG.md build/workspace/CHANGELOG.md
 	cp README.md build/workspace/README.md
 	cp package.json build/workspace/package.json
 	cp package-lock.json build/workspace/package-lock.json
